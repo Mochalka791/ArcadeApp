@@ -1,3 +1,92 @@
-@page "/tetris"
+﻿@page "/tetris"
+@using ArcadeApp.Core.Games.Tetris
+@inject ArcadeApp.UI.State.AuthState AuthState
+
 <h3>Tetris</h3>
-<p>Hier wird das Tetris-Spiel-UI eingebunden.</p>
+
+@if (AuthState.IsAuthenticated)
+{
+    <p>Willkommen zurück, @AuthState.CurrentUser!.UserName! 🎮</p>
+}
+else
+{
+    <p>Du spielst gerade im <b>Gastmodus</b>. Später koppeln wir das an deinen Account.</p>
+}
+
+<p>Score: @_engine.Score (@_engine.LinesCleared Zeilen)</p>
+
+@if (_engine.IsGameOver)
+{
+    <p style="color:red;">Game Over 😵</p>
+    <button @onclick="Restart">Nochmal spielen</button>
+}
+
+<div class="tetris-board">
+    @for (int r = 0; r < _engine.Height; r++)
+    {
+        <div class="tetris-row">
+            @for (int c = 0; c < _engine.Width; c++)
+            {
+                var cell = _engine.GetDisplayCell(r, c);
+                <span class="tetris-cell @(cell == 0 ? "empty" : $"filled type-{cell}")"></span>
+            }
+        </div>
+    }
+</div>
+
+@if (!_engine.IsGameOver)
+{
+    <div class="tetris-controls">
+        <button @onclick="MoveLeft">⬅</button>
+        <button @onclick="Rotate">⟳</button>
+        <button @onclick="MoveRight">➡</button>
+        <button @onclick="SoftDrop">⬇</button>
+        <button @onclick="StepTick">Tick</button>
+    </div>
+}
+
+@code {
+    private readonly TetrisEngine _engine = new();
+
+    protected override void OnInitialized()
+    {
+        _engine.StartNewGame();
+    }
+
+    private void Restart()
+    {
+        _engine.StartNewGame();
+        StateHasChanged();
+    }
+
+    private void MoveLeft()
+    {
+        _engine.MoveLeft();
+        StateHasChanged();
+    }
+
+    private void MoveRight()
+    {
+        _engine.MoveRight();
+        StateHasChanged();
+    }
+
+    private void Rotate()
+    {
+        _engine.RotateClockwise();
+        StateHasChanged();
+    }
+
+    private void SoftDrop()
+    {
+        _engine.SoftDrop();
+        _engine.Tick();
+        StateHasChanged();
+    }
+
+    private void StepTick()
+    {
+        _engine.Tick();
+        StateHasChanged();
+    }
+}

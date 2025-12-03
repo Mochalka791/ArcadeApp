@@ -1,13 +1,12 @@
-@using ArcadeApp.UI.Layout
-@using ArcadeApp.UI.Pages
+@namespace ArcadeApp.UI
 
-<Router AppAssembly="typeof(App).Assembly">
+<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="@typeof(MainLayout)" />
+        <RouteView RouteData="routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
     </Found>
     <NotFound>
-        <LayoutView Layout="typeof(MainLayout)">
-            <NotFound />
-        </LayoutView>
+        <Layout.MainLayout>
+            <p>Seite nicht gefunden.</p>
+        </Layout.MainLayout>
     </NotFound>
 </Router>

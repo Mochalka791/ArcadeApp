@@ -15,7 +15,6 @@ public class JwtMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        // Placeholder JWT processing for scaffolded architecture
         var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(' ').Last();
         if (!string.IsNullOrWhiteSpace(token))
         {
@@ -31,3 +30,5 @@ public class JwtMiddleware
         await _next(context);
     }
 }
+
+

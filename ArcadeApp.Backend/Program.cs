@@ -3,27 +3,28 @@ using ArcadeApp.Backend.Mapping;
 using ArcadeApp.Backend.Middlewares;
 using ArcadeApp.Core.Services.Implementations;
 using ArcadeApp.Core.Services.Interfaces;
+using ArcadeApp.UI.State;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// === API-Teil ===
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ArcadeApp.Core.Services.Interfaces.IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IStatsService, StatsService>();
 
 builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(ApiMappingProfile));
 
-// === UI-Teil ===
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Auth-State der UI
-builder.Services.AddScoped<ArcadeApp.UI.State.AuthState>();
+builder.Services.AddScoped<AuthState>();
+
+builder.Services.AddScoped<
+    ArcadeApp.Core.Services.Auth.IAuthService,
+    ArcadeApp.Core.Services.Auth.FakeAuthService>();
 
 var app = builder.Build();
 
@@ -32,18 +33,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseRouting();
+
+app.UseAntiforgery();
 
 app.UseMiddleware<JwtMiddleware>();
 app.UseAuthorization();
 
-// API
 app.MapControllers();
 
-// UI – App aus ArcadeApp.UI hosten
 app.MapRazorComponents<ArcadeApp.UI.App>()
    .AddInteractiveServerRenderMode();
 

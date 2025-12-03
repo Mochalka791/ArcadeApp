@@ -1,3 +1,4 @@
+using ArcadeApp.Core.Models;
 using ArcadeApp.Core.Models.Auth;
 using ArcadeApp.Core.Services.Interfaces;
 

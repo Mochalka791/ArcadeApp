@@ -65,9 +65,10 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ArcadeApp.UI\ArcadeApp.UI.csproj" />
-    <ProjectReference Include="..\ArcadeApp.Core\ArcadeApp.Core.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\ArcadeApp.UI\ArcadeApp.UI.csproj" />
+        <ProjectReference Include="..\ArcadeApp.Core\ArcadeApp.Core.csproj" />
+    </ItemGroup>
+
 
 </Project>

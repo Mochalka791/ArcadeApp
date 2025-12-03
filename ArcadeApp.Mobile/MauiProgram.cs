@@ -1,5 +1,5 @@
+using ArcadeApp.UI.State;
 namespace ArcadeApp.Mobile;
-
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
@@ -13,7 +13,7 @@ public static class MauiProgram
         builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-        builder.Services.AddScoped<ArcadeApp.UI.Services.AuthState>();
+        builder.Services.AddScoped<AuthState>();
         builder.Services.AddScoped<
             ArcadeApp.Core.Services.Auth.IAuthService,
             ArcadeApp.Core.Services.Auth.FakeAuthService>();

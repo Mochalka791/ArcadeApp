@@ -7,7 +7,7 @@ namespace ArcadeApp.Core.Services.Auth;
 
 public sealed class FakeAuthService : ArcadeApp.Core.Services.Auth.IAuthService
 {
-    private readonly Dictionary<string, (ArcadeApp.Core.Models.Auth.User User, string Password)> _users
+    private readonly Dictionary<string, (ArcadeApp.Core.Models.User User, string Password)> _users
         = new(StringComparer.OrdinalIgnoreCase);
 
     public Task<ArcadeApp.Core.Models.Auth.AuthResult> RegisterAsync(
@@ -23,7 +23,7 @@ public sealed class FakeAuthService : ArcadeApp.Core.Services.Auth.IAuthService
             });
         }
 
-        var user = new ArcadeApp.Core.Models.Auth.User
+        var user = new ArcadeApp.Core.Models.User
         {
             Email = request.Email
         };

@@ -6,6 +6,9 @@
     <RootNamespace>ArcadeApp.Core</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameLogic\Tetris\Tetris.razor" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
   </ItemGroup>

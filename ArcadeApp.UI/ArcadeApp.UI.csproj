@@ -10,14 +10,13 @@
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\ArcadeApp.Core\ArcadeApp.Core.csproj" />
+        <ProjectReference Include="..\ArcadeApp.Database\ArcadeApp.Database.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ArcadeApp.Backend\ArcadeApp.WEB.csproj" />
-    <ProjectReference Include="..\ArcadeApp.Core\ArcadeApp.Core.csproj" />
-    <ProjectReference Include="..\ArcadeApp.Database\ArcadeApp.Database.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />

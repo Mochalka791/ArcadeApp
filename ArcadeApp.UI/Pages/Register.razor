@@ -1,4 +1,48 @@
-﻿    private async Task HandleRegister()
+﻿@page "/register"
+@using System.ComponentModel.DataAnnotations
+@using ArcadeApp.Core.Models.Auth
+
+@inject ArcadeApp.Core.Services.Auth.IAuthService AuthService
+@inject ArcadeApp.UI.State.AuthState AuthState
+@inject NavigationManager Nav
+
+<h3>Registrieren</h3>
+
+<EditForm Model="_model" OnValidSubmit="HandleRegister">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>E-Mail</label><br />
+        <InputText @bind-Value="_model.Email" />
+        <ValidationMessage For="@(() => _model.Email)" />
+    </div>
+
+    <div>
+        <label>Passwort</label><br />
+        <InputText @bind-Value="_model.Password" type="password" />
+        <ValidationMessage For="@(() => _model.Password)" />
+    </div>
+
+    <div>
+        <label>Passwort (Wiederholung)</label><br />
+        <InputText @bind-Value="_model.PasswordRepeat" type="password" />
+        <ValidationMessage For="@(() => _model.PasswordRepeat)" />
+    </div>
+
+    <button type="submit">Registrieren</button>
+
+    @if (!string.IsNullOrWhiteSpace(_error))
+    {
+        <p style="color:red">@_error</p>
+    }
+</EditForm>
+
+@code {
+    private RegisterModel _model = new();
+    private string? _error;
+
+    private async Task HandleRegister()
     {
         _error = null;
 
@@ -9,7 +53,7 @@
         }
 
         var result = await AuthService.RegisterAsync(
-            new ArcadeApp.Core.Models.Auth.RegisterRequest
+            new RegisterRequest
             {
                 Email = _model.Email,
                 Password = _model.Password,
@@ -25,3 +69,16 @@
         AuthState.SignIn(result.User);
         Nav.NavigateTo("/");
     }
+
+    private sealed class RegisterModel
+    {
+        [Required, EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Required, MinLength(6)]
+        public string Password { get; set; } = string.Empty;
+
+        [Required, MinLength(6)]
+        public string PasswordRepeat { get; set; } = string.Empty;
+    }
+}

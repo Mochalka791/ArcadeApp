@@ -1,0 +1,11 @@
+@using ArcadeApp.UI.Pages
+
+<Router AppAssembly="@typeof(Login).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" />
+    </Found>
+    <NotFound>
+        <p>Seite nicht gefunden.</p>
+        <a href="/login">Zum Login</a>
+    </NotFound>
+</Router>

@@ -43,7 +43,7 @@ app.UseAuthorization();
 // API
 app.MapControllers();
 
-// UI – App aus ArcadeApp.UI hosten
+// UI â€“ App aus ArcadeApp.UI hosten
 app.MapRazorComponents<ArcadeApp.UI.App>()
    .AddInteractiveServerRenderMode();
 

@@ -2,11 +2,11 @@
 @inject AuthState AuthState
 @inject NavigationManager Nav
 
-<h3>Start</h3>
+<h3>Home</h3>
 
 @if (!AuthState.IsAuthenticated)
 {
-    <p>Bitte zuerst einloggen.</p>
+    <p>Du bist nicht eingeloggt.</p>
     <button @onclick="GoToLogin">Zum Login</button>
 }
 else

@@ -1,7 +1,9 @@
 <Solution>
-  <Project Path="ArcadeApp.UI/ArcadeApp.UI.csproj" />
-  <Project Path="ArcadeApp.Mobile/ArcadeApp.Mobile.csproj" />
+  <Project Path="ArcadeApp.Backend/ArcadeApp.WEB.csproj" />
   <Project Path="ArcadeApp.Core/ArcadeApp.Core.csproj" />
   <Project Path="ArcadeApp.Database/ArcadeApp.Database.csproj" />
-  <Project Path="ArcadeApp.Backend/ArcadeApp.Backend.csproj" />
+  <Project Path="ArcadeApp.Mobile/ArcadeApp.Mobile.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+  <Project Path="ArcadeApp.UI/ArcadeApp.UI.csproj" />
 </Solution>

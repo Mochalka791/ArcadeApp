@@ -1,6 +1,7 @@
 using AutoMapper;
 using ArcadeApp.Core.Models;
 using ArcadeApp.Database.Entities;
+using ArcadeApp.Core.Models.Auth;
 
 namespace ArcadeApp.Backend.Mapping;
 

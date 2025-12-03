@@ -10,7 +10,7 @@
     <ValidationSummary />
 
     <div>
-        <label>Email</label><br />
+        <label>E-Mail</label><br />
         <InputText @bind-Value="_model.Email" />
     </div>
 
@@ -32,6 +32,11 @@
     }
 </EditForm>
 
+<p>
+    Bereits ein Konto?
+    <a href="/login">Zum Login</a>
+</p>
+
 @code {
     private RegisterModel _model = new();
     private string? _error;
@@ -46,33 +51,21 @@
             return;
         }
 
-        var registerRequest = new UserRegisterDto
+        var result = await AuthService.RegisterAsync(new RegisterRequest
         {
             Email = _model.Email,
-            UserName = _model.Email,
-            Password = _model.Password
-        };
+            Password = _model.Password,
+            PasswordRepeat = _model.PasswordRepeat
+        });
 
-        var user = await AuthService.RegisterAsync(registerRequest);
-
-        if (user is null)
+        if (!result.Success || result.User is null)
         {
-            _error = "Registrierung fehlgeschlagen.";
+            _error = result.Error ?? "Registrierung fehlgeschlagen.";
             return;
         }
 
-        var loginRequest = new UserLoginDto
-        {
-            Email = _model.Email,
-            Password = _model.Password
-        };
-
-        var loggedInUser = await AuthService.LoginAsync(loginRequest);
-        if (loggedInUser is not null)
-        {
-            AuthState.SignIn(loggedInUser);
-            Nav.NavigateTo("/");
-        }
+        AuthState.SignIn(result.User);
+        Nav.NavigateTo("/");
     }
 
     private sealed class RegisterModel

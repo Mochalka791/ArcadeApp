@@ -1,47 +1,4 @@
-﻿@page "/register"
-@inject IAuthService AuthService
-@inject AuthState AuthState
-@inject NavigationManager Nav
-
-<h3>Registrieren</h3>
-
-<EditForm Model="_model" OnValidSubmit="HandleRegister">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div>
-        <label>E-Mail</label><br />
-        <InputText @bind-Value="_model.Email" />
-    </div>
-
-    <div>
-        <label>Passwort</label><br />
-        <InputText @bind-Value="_model.Password" type="password" />
-    </div>
-
-    <div>
-        <label>Passwort wiederholen</label><br />
-        <InputText @bind-Value="_model.PasswordRepeat" type="password" />
-    </div>
-
-    <button type="submit">Account erstellen</button>
-
-    @if (!string.IsNullOrWhiteSpace(_error))
-    {
-        <p style="color:red">@_error</p>
-    }
-</EditForm>
-
-<p>
-    Bereits ein Konto?
-    <a href="/login">Zum Login</a>
-</p>
-
-@code {
-    private RegisterModel _model = new();
-    private string? _error;
-
-    private async Task HandleRegister()
+﻿    private async Task HandleRegister()
     {
         _error = null;
 
@@ -51,12 +8,13 @@
             return;
         }
 
-        var result = await AuthService.RegisterAsync(new RegisterRequest
-        {
-            Email = _model.Email,
-            Password = _model.Password,
-            PasswordRepeat = _model.PasswordRepeat
-        });
+        var result = await AuthService.RegisterAsync(
+            new ArcadeApp.Core.Models.Auth.RegisterRequest
+            {
+                Email = _model.Email,
+                Password = _model.Password,
+                PasswordRepeat = _model.PasswordRepeat
+            });
 
         if (!result.Success || result.User is null)
         {
@@ -67,16 +25,3 @@
         AuthState.SignIn(result.User);
         Nav.NavigateTo("/");
     }
-
-    private sealed class RegisterModel
-    {
-        [Required, EmailAddress]
-        public string Email { get; set; } = string.Empty;
-
-        [Required, MinLength(4)]
-        public string Password { get; set; } = string.Empty;
-
-        [Required]
-        public string PasswordRepeat { get; set; } = string.Empty;
-    }
-}

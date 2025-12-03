@@ -7,7 +7,6 @@ public class UserService : IUserService
 {
     public Task<User?> GetProfileAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        // Placeholder profile
         var user = new User
         {
             Id = userId,

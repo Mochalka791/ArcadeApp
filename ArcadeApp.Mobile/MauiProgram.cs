@@ -1,6 +1,3 @@
-using ArcadeApp.UI.Services;
-using ArcadeApp.Core.Services.Auth;
-
 namespace ArcadeApp.Mobile;
 
 public static class MauiProgram
@@ -9,13 +6,17 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
 
-        builder
-            .UseMauiApp<App>();
-
+        builder.UseMauiApp<App>();
         builder.Services.AddMauiBlazorWebView();
 
-        builder.Services.AddScoped<AuthState>();
-        builder.Services.AddScoped<IAuthService, FakeAuthService>();
+#if DEBUG
+        builder.Services.AddBlazorWebViewDeveloperTools();
+#endif
+
+        builder.Services.AddScoped<ArcadeApp.UI.Services.AuthState>();
+        builder.Services.AddScoped<
+            ArcadeApp.Core.Services.Auth.IAuthService,
+            ArcadeApp.Core.Services.Auth.FakeAuthService>();
 
         return builder.Build();
     }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ArcadeApp.Core.Models.Auth;
+﻿namespace ArcadeApp.Core.Models.Auth;
 
 public sealed class LoginRequest
 {

@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject AuthState AuthState
+@inject ArcadeApp.UI.Services.AuthState AuthState
 @inject NavigationManager Nav
 
 <h3>Home</h3>
@@ -11,11 +11,8 @@
 }
 else
 {
-    <p>Willkommen, @AuthState.CurrentUser!.Email!</p>
-
+    <p>Willkommen, @AuthState.CurrentUser?.Email</p>
     <button @onclick="Logout">Logout</button>
-
-    <p>Hier kommt später Tetris 🎮</p>
 }
 
 @code {

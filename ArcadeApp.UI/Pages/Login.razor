@@ -1,6 +1,8 @@
 ﻿@page "/login"
-@inject IAuthService AuthService
-@inject AuthState AuthState
+@using System.ComponentModel.DataAnnotations
+
+@inject ArcadeApp.Core.Services.Auth.IAuthService AuthService
+@inject ArcadeApp.UI.Services.AuthState AuthState
 @inject NavigationManager Nav
 
 <h3>Login</h3>
@@ -27,11 +29,6 @@
     }
 </EditForm>
 
-<p>
-    Noch kein Account?
-    <a href="/register">Registrieren</a>
-</p>
-
 @code {
     private LoginModel _model = new();
     private string? _error;
@@ -40,11 +37,12 @@
     {
         _error = null;
 
-        var result = await AuthService.LoginAsync(new LoginRequest
-        {
-            Email = _model.Email,
-            Password = _model.Password
-        });
+        var result = await AuthService.LoginAsync(
+            new ArcadeApp.Core.Models.Auth.LoginRequest
+            {
+                Email = _model.Email,
+                Password = _model.Password
+            });
 
         if (!result.Success || result.User is null)
         {

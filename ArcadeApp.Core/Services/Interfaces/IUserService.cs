@@ -1,4 +1,4 @@
-using ArcadeApp.Core.Models;
+using ArcadeApp.Core.Models.Auth;
 
 namespace ArcadeApp.Core.Services.Interfaces;
 

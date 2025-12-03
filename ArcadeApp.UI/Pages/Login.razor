@@ -10,7 +10,7 @@
     <ValidationSummary />
 
     <div>
-        <label>Email</label><br />
+        <label>E-Mail</label><br />
         <InputText @bind-Value="_model.Email" />
     </div>
 
@@ -39,16 +39,21 @@
     private async Task HandleLogin()
     {
         _error = null;
-        var user = await AuthService.LoginAsync(_model.Email, _model.Password);
 
-        if (user is null)
+        var result = await AuthService.LoginAsync(new LoginRequest
         {
-            _error = "Falsche Zugangsdaten.";
+            Email = _model.Email,
+            Password = _model.Password
+        });
+
+        if (!result.Success || result.User is null)
+        {
+            _error = result.Error ?? "Login fehlgeschlagen.";
             return;
         }
 
-        AuthState.SignIn(user);
-        Nav.NavigateTo("/");   // immer mit Parameter
+        AuthState.SignIn(result.User);
+        Nav.NavigateTo("/");
     }
 
     private sealed class LoginModel
